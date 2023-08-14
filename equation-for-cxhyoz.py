@@ -74,5 +74,5 @@ else:
             # final percent
             print()
             print("The percentage of oxygen lost as CO_2 is: %.3f" % lost_c)
-            print("The percentage of oxygen lost as CO_2 is: %.3f" % lost_o)
+            print("The percentage of oxygen lost as H_2O is: %.3f" % lost_o)
             print()
