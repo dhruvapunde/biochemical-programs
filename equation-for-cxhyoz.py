@@ -4,16 +4,20 @@
 
 #####
 
-# hydrocarbon in reactant
+# the variables c, h and o are the molecules in the hydrocarbon
+
 print()
+# carbon in reactant
 c = float(input("Enter the number of of carbon atoms in the hydrocarbon: "))
 if(c < 0):
     print("Please enter a non negative value")
 else:
+    # hydrogen in reactant
     h = float(input("Enter the number of of hydrogen atoms in the hydrocarbon: "))
     if(h < 0):
         print("Please enter a non negative value")
     else:
+        # oxygen in reactant
         o = float(input("Enter the number of of oxygen atoms in the hydrocarbon: "))
         if(o < 0):
             print("Please enter a non negative value")
@@ -27,17 +31,17 @@ else:
             oxygen = float(water+2*carbondioxide-o)/2
 
             # condition to check if the number is not a decimal. If it is not a decimal then the datatype is reassigned as integer
-            if((c).is_integer() == True):
+            if((c).is_integer()):
                 c = int(c)
-            if((h).is_integer() == True):
+            if((h).is_integer()):
                 h = int(h)
-            if((o).is_integer() == True):
+            if((o).is_integer()):
                 o = int(o)
-            if((carbondioxide).is_integer() == True):
+            if((carbondioxide).is_integer()):
                 carbondioxide = int(carbondioxide)
-            if((oxygen).is_integer() == True):
+            if((oxygen).is_integer()):
                 oxygen = int(oxygen)
-            if((water).is_integer() == True):
+            if((water).is_integer()):
                 water = int(water)
 
             # final reaction
