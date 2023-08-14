@@ -10,7 +10,7 @@
 ## Usage
 
 ```sh
-clone https://github.com/dhruvapunde/biochemical-programs.git
+git clone https://github.com/dhruvapunde/biochemical-programs.git
 cd biochemical-programs
 python3 App.py
 ```
