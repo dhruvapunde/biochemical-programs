@@ -7,6 +7,11 @@
 
 > This repository contains some programs which I've written to make my life a bit easier during my biochemistry lectures. This is supposed to be a programming exercise for myself to understand the concepts better. Feel free to use to code if you find it useful, however do respect the license.
 
+## Prerequisites
+Please make sure to have Python and Kivy installed.
+
+To install Python, execute ```sudo apt install python3```.
+To install Kivy, execute ```pip install kivy```.
 ## Usage
 
 ```sh
