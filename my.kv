@@ -1,0 +1,156 @@
+<Gui>
+    
+    c:c
+    h:h
+    o:o
+    GridLayout:
+        cols:1
+        rows:9
+        size: root.width, root.height
+
+        GridLayout:
+            cols: 7
+            rows:1
+            row_default_height: 40
+            row_force_default: True
+            position_hint: 1000,100
+            padding: 20
+            
+            Label:
+                text: "C"   
+                font_size: 30
+                size_hint: 0.3,0.1
+                
+            
+            TextInput:
+                id: c
+                text: "12"
+                font_size: 18
+                multiline: False
+                size_hint_x: 0.4
+                size_hint_y: None
+                height: self.minimum_height
+                background_color: (1,1,1,0.2)
+                foreground_color: (1,1,1,1)
+                input_filter: 'int'
+                on_text: root.preconditions_check()
+                
+            Label:
+                text: "H"   
+                font_size: 30
+                size_hint: 0.3,0.1
+            
+            
+            TextInput:
+                id: h
+                text: "22"
+                font_size: 18
+                multiline: False
+                size_hint_x: 0.4
+                size_hint_y: None
+                height: self.minimum_height
+                background_color: (1,1,1,0.2)
+                foreground_color: (1,1,1,1)
+                input_filter: 'int'
+                on_text: root.preconditions_check()
+            
+            Label:
+                text: "O"   
+                font_size: 30
+                size_hint: 0.3,0.1
+                
+            
+            TextInput:
+                id: o
+                text: "11"
+                font_size: 18
+                multiline: False
+                size_hint_x: 0.4
+                size_hint_y: None
+                height: self.minimum_height
+                background_color: (1,1,1,0.2)
+                foreground_color: (1,1,1,1)
+                input_filter: 'int'
+                on_text: root.preconditions_check()
+        
+        GridLayout:
+            cols: 7
+
+            Label:
+                text: ""   
+                font_size: 30
+                size_hint: 0.3,0.1
+            
+            Label:
+                text: ""   
+                font_size: 30
+                size_hint: 0.3,0.1
+            
+            Label:
+                text: "+"   
+                font_size: 30
+                size_hint: 0.3,0.1
+
+            Label:
+                text: root.oxygen + "O[sub]2[/sub]"   
+                font_size: 30
+                markup: True
+                
+            Label:
+                text: "->"   
+                font_size: 30
+                size_hint: 0.3,0.1
+            
+            Label:
+                text: ""   
+                font_size: 30
+                size_hint: 0.3,0.1
+            
+            Label:
+                text: ""   
+                font_size: 30
+                size_hint: 0.3,0.1
+            
+        GridLayout:
+            cols:5
+            
+            Label:
+                text: root.carbondioxide + "CO[sub]2[/sub]"   
+                font_size: 30
+                markup: True
+            
+            Label:
+                text: "+"   
+                font_size: 30
+                markup: True
+            
+            Label:
+                text: root.water + "H[sub]2[/sub]O"   
+                font_size: 30
+                markup: True
+        
+        Label:
+            text:''
+            font_size: 30
+
+        Label:
+            text:'----------------'
+            font_size: 30
+        
+        Label:
+            text:''
+            font_size: 30
+        
+        Label:
+            text:root.lost_to_CO2 + "% [color=#B10600]of oxygen is lost to CO[sub]2[/sub].[/color]"   
+            font_size: 20
+            markup: True
+
+        Label:
+            text:root.lost_to_water + "% [color=#B10600]of oxygen is lost to Bo'ohw'o'wo'er.[/color]"   
+            font_size: 20
+            markup: True
+        
+        Label:
+            text:''
+            font_size: 30
