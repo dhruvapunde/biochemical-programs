@@ -5,4 +5,5 @@
   </a>
 </p>
 
-> This repository contains some programs which I've written to make my life a bit easier during my biochemistry lectures. This is supposed to be a programming exercise for myself to understand the concepts better. Feel free to use to code if you find it useful, however do respect the license.
+> This repository contains some programs which I've written to make my life a bit easier during my biochemistry lectures. This is supposed to be a programming exercise for myself to understand the concepts better.  
+Feel free to use to code if you find it useful, however do respect the license.
