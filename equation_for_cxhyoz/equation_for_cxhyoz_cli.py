@@ -1,9 +1,3 @@
-#####
-
-# This program calculates the percent of oxygen in the reactants of combustion of any hydrocarbon which follows the syntax of "C_x H_y O_z" where x, y and z are any whole numbers respectively. It also outputs the balanced chemical reaction.
-
-#####
-
 print()
 # carbon in reactant
 c = float(input("Enter the number of of carbon atoms in the hydrocarbon: "))

@@ -1,3 +1,6 @@
+## Equation for C_x H_y O_z
+ This program calculates the percent of oxygen in the reactants of combustion of any hydrocarbon which follows the syntax of "C_x H_y O_z" where x, y and z are any whole numbers respectively. It also outputs the balanced chemical reaction.
+
 ## Prerequisites
 Please make sure to have Python and Kivy installed.
 
