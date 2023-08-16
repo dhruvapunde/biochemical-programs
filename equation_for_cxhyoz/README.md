@@ -1,7 +1,7 @@
 ## Prerequisites
 Please make sure to have Python and Kivy installed.
 
-To install Python, execute ```sudo apt install python3```. on Debian based systems.  
+To install Python, execute ```sudo apt install python3``` on Debian based systems or ```sudo pacman -S python``` on Arch based systems.  
 To install Kivy, execute ```pip install kivy```.
 ## Usage
 
