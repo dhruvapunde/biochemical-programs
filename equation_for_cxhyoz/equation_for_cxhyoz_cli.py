@@ -46,7 +46,7 @@ else:
          print()
          print(f"The reaction is C_{c} H_{h} O_{o}  +  {oxygen} O_2  -->  {carbondioxide} CO_2 + {water} H_2O")
 
-         atomic weight of the elements
+         # atomic weight of the elements
          mol_c = float(12)
          mol_o = float(16)
          mol_h = float(1)
