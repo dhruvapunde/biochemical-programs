@@ -52,7 +52,7 @@ else:
          w_carbondioxide = float((mol_c+2*mol_o)*carbondioxide)
          w_oxygen = float(2*mol_o*oxygen)
          w_water = float((2*mol_h+mol_o)*water)
-         w_hydrocarbon = float((mol_c*c)+(mol_h*h)+(mol_o*o))
+         w_hydrocarbon = float(w_c+w_h+w_o)
 
          # weight of oxygen in products
          o_in_carbondioxide = float(c*2)
@@ -64,7 +64,7 @@ else:
          percent_o_in_water = float(o_in_water/total_o_in_products)
 
          # percent lost
-         lost_c = float(((c*mol_c)+(o*mol_o)*percent_o_in_carbondioxide)*100/w_hydrocarbon)
+         lost_c = float((w_c+w_o*percent_o_in_carbondioxide)*100/w_hydrocarbon)
          lost_o = float(100-lost_c)
 
          # final percent
