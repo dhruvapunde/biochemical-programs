@@ -1,0 +1,182 @@
+---
+title: Biochemical Process Calculation Tutorials
+author: Dhruva Punde 
+output: 
+    pdf_document:
+        extra_dependencies: ["amsmath", "amssymb", "blindtext"]
+        toc: true
+        toc_depth: 2
+        number_sections: true
+        df_print: kable
+---
+
+\newcommand{\chemeq}[1]{$$\mathrm{#1}$$}
+\newcommand{\ans}[1]{\textbf{\underline{#1}}}
+
+\Large
+
+# Consider combustion of butane that forms the the stuff in LPG cylinder. Calculate for 1 kmol of butane burning:
+
+## Kmol of O~2~ required
+
+## Kmol of air required
+
+## Kmol of CO~2~ produced
+
+## Kmol of H~2~O produced
+
+## Percent molar composition of flue gas
+
+\ans{Answer} $\rightarrow$
+
+\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
+
+```{r echo=FALSE}
+## 3 digits afer decimal point
+options(digits=3)
+```
+
+```{r}
+## reactants and products
+butane <- 1
+oxygen <- 6.5 # part 1
+carbondioxide <- 4 # part 3
+water <- 5 # part 4
+
+air <- 100/21*oxygen # part 2
+nitrogen <- 79/21*oxygen
+final <- carbondioxide + water + nitrogen # part 5
+```
+
+Kmol of O~2~ required is: **`r oxygen` kmoles**  
+Kmol of air required is: **`r air` kmoles**  
+Kmol of CO~2~ produced is: **`r carbondioxide` kmoles**  
+Kmol of H~2~O produced is: **`r water` kmoles**  
+Kmol of N~2~ required is: **`r nitrogen` kmoles**  
+
+Kmol of final gas produced is: **`r final` kmoles**
+
+Percentage of CO~2~ is: **`r carbondioxide*100/final`%**  
+Percentage of H~2~O is: **`r water*100/final`%**  
+Percentage of N~2~ is: **`r nitrogen*100/final`%**  
+
+# A coke is known to contain 90% carbon and 10% non-combustible ash (by weight).
+
+## How many moles of O~2~ are theoretically required to burn 100 kg of coke completely.
+
+## If 50% excess of air is supplied, calculate analysis of gases at end of combustion
+
+\ans{Answer} $\rightarrow$
+
+\chemeq{C + O_{2} \rightarrow CO_{2}}
+
+```{r}
+coke <- (90/100*100)/12 # 90% by weight to moles
+oxygen <- coke*1
+carbondioxide <- coke*1
+
+nitrogen <- 79/21*oxygen
+excess <- (50/100*oxygen)+oxygen # 50% excess
+oxygen_at_end <- excess - oxygen # excess - theoretical
+final <- nitrogen + oxygen_at_end + carbondioxide
+```
+
+Moles of O~2~ theoretically required to burn 100 kg of coke is: **`r oxygen` moles**, in kg that is: **`r oxygen*32` kg**  
+Moles of O~2~ at end (excess) is: **`r oxygen_at_end` moles**, in kg that is: **`r oxygen_at_end*32` kg**  
+Moles of N~2~ at the end is: **`r nitrogen` moles**, in kg that is: **`r nitrogen*28` kg**  
+Moles of CO~2~ produced is: **`r carbondioxide` moles**, in kg that is: **`r carbondioxide*44` kg**
+
+Percent of CO~2~ is: **`r carbondioxide*100/final`%**  
+Percent of O~2~ (excess) is: **`r oxygen_at_end*100/final`%**  
+Percent of N~2~ is: **`r nitrogen*100/final`%**  
+
+# Find out quantity of reactant to produce 1000 kg of methanol.
+
+\ans{Answer} $\rightarrow$
+
+\chemeq{CO + 2H_{2} \rightarrow CH_{3}OH}
+
+```{r}
+methanol <- 1000/32 # kg to moles
+carbonmono <- 1*methanol
+hydrogen <- 2*methanol
+
+carbonmono <- carbonmono*28
+hydrogen <- hydrogen*2
+```
+
+CO required is: **`r carbonmono` kg**, that in Kmol is: **`r carbonmono/28` Kmol**  
+H~2~ required is: **`r hydrogen` kg**, that in Kmol is: **`r hydrogen/2` Kmol**  
+
+# A process in which 500 kg of CaCO~3~ produces CaO (calcination reaction) with 90%. Prepare stoitiometric table.
+
+\ans{Answer} $\rightarrow$
+
+\chemeq{CaCO_{3} \rightarrow CaO + CO_{2}}
+
+```{r}
+moles <- 500/100 # kg to moles
+p_moles <- 90/100*moles
+weight <- c((40+12+3*16), (40+16), (12+2*16))
+i_moles <- c(moles, 0, 0)
+i_mass <- c(500, 0, 0)
+moles <- moles - p_moles
+o_moles <- c(moles, p_moles, p_moles)
+mass <- c(500, 4.5*(40+16), 4.5*(12+2*16))
+
+## data frame to plot the stoitiometric table
+table <- data.frame(
+weight, i_moles, i_mass, o_moles, mass)
+colnames(table) <- c("weight", "input moles", 
+"input mass", "output moles", "mass")
+rownames(table) <- c("CaCO3", "CaO", "CO2")
+table
+```
+
+# Ethylene oxide is prepared by oxidation of ethylene. 100 kmol of ethylene and 100 kmol of O~2~ are charged to reactor. Percent conversion of ethylene is 85%, yield of ethylene oxide is 94.12%. Prepare stoitiometric table.
+
+\ans{Answer} $\rightarrow$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# A combustion chamber is filled with butane and excess air. The composition of combustion gases (by volume) is CO~2~ = 9.39%, H~2~O = 11.73%, O~2~ = 4.70% and N~2~ = 74.13
+
+## Find percent excess air used and mole ratio of air to butane used for complete combustion.
+
+## For incomplete combustion, what are the elements of combustion gases.
+
+## Find composition of combustion gases for 80% combustion of butane.
+
+## Find percent excess air and percent conversion of butane and quantity of butane and air used, if combustion of gases on pressure basis is given by CO~2~ = 8%, H~2~O = 11.2%, butane = 1.8%, O~2~ = 4.8% and N~2~ = 74.2%
+
+\ans{Answer} $\rightarrow$
+
+\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
+
+
+
+
+
+
+
+
+
+
+
+
+
