@@ -1,6 +1,6 @@
 ---
-title: Biochemical Process Calculation Tutorials
-author: Dhruva Punde 
+title: \textbf{\huge{Biochemical Process Calculation Tutorials}}
+author: \textbf{\large{Dhruva Punde}}
 output: 
     pdf_document:
         extra_dependencies: ["amsmath", "amssymb", "blindtext"]
@@ -48,13 +48,13 @@ nitrogen <- 79/21*oxygen
 final <- carbondioxide + water + nitrogen # part 5
 ```
 
-Kmol of O~2~ required is: **`r oxygen` kmoles**  
-Kmol of air required is: **`r air` kmoles**  
-Kmol of CO~2~ produced is: **`r carbondioxide` kmoles**  
-Kmol of H~2~O produced is: **`r water` kmoles**  
-Kmol of N~2~ required is: **`r nitrogen` kmoles**  
+Kmol of O~2~ required is: **`r oxygen` kmol**  
+Kmol of air required is: **`r air` kmol**  
+Kmol of CO~2~ produced is: **`r carbondioxide` kmol**  
+Kmol of H~2~O produced is: **`r water` kmol**  
+Kmol of N~2~ required is: **`r nitrogen` kmol**  
 
-Kmol of final gas produced is: **`r final` kmoles**
+Kmol of final gas produced is: **`r final` kmol**
 
 Percentage of CO~2~ is: **`r carbondioxide*100/final`%**  
 Percentage of H~2~O is: **`r water*100/final`%**  
@@ -71,14 +71,15 @@ Percentage of N~2~ is: **`r nitrogen*100/final`%**
 \chemeq{C + O_{2} \rightarrow CO_{2}}
 
 ```{r}
+## reactants and products
 coke <- (90/100*100)/12 # 90% by weight to moles
-oxygen <- coke*1
+oxygen <- coke*1 # part 1
 carbondioxide <- coke*1
 
 nitrogen <- 79/21*oxygen
-excess <- (50/100*oxygen)+oxygen # 50% excess
+excess <- (50/100*oxygen)+oxygen # 50% excess, part 2
 oxygen_at_end <- excess - oxygen # excess - theoretical
-final <- nitrogen + oxygen_at_end + carbondioxide
+final <- nitrogen + oxygen_at_end + carbondioxide # product gas
 ```
 
 Moles of O~2~ theoretically required to burn 100 kg of coke is: **`r oxygen` moles**, in kg that is: **`r oxygen*32` kg**  
@@ -97,11 +98,13 @@ Percent of N~2~ is: **`r nitrogen*100/final`%**
 \chemeq{CO + 2H_{2} \rightarrow CH_{3}OH}
 
 ```{r}
+## reactants and products
 methanol <- 1000/32 # kg to moles
 carbonmono <- 1*methanol
 hydrogen <- 2*methanol
 
-carbonmono <- carbonmono*28
+## by weight
+carbonmono <- carbonmono*28 
 hydrogen <- hydrogen*2
 ```
 
@@ -116,19 +119,20 @@ H~2~ required is: **`r hydrogen` kg**, that in Kmol is: **`r hydrogen/2` Kmol**
 
 ```{r}
 moles <- 500/100 # kg to moles
-p_moles <- 90/100*moles
-weight <- c((40+12+3*16), (40+16), (12+2*16))
-i_moles <- c(moles, 0, 0)
-i_mass <- c(500, 0, 0)
-moles <- moles - p_moles
-o_moles <- c(moles, p_moles, p_moles)
-mass <- c(500, 4.5*(40+16), 4.5*(12+2*16))
+p_moles <- 90/100*moles # reacted moles
+weight <- c((40+12+3*16), (40+16), (12+2*16)) # mol weights
+i_moles <- c(moles, 0, 0) # input moles
+i_mass <- c(500, 0, 0) # input mass (without 90%)
+moles <- moles - p_moles # remaining moles of CaCO3
+o_moles <- c(moles, p_moles, p_moles) # output moles
+mass <- c(500, 4.5*weight[2], 4.5*weight[3]) # mass
 
 ## data frame to plot the stoitiometric table
+## the previous vectors are used as rows and columns
 table <- data.frame(
-weight, i_moles, i_mass, o_moles, mass)
+    weight, i_moles, i_mass, o_moles, mass)
 colnames(table) <- c("weight", "input moles", 
-"input mass", "output moles", "mass")
+    "input mass", "output moles", "mass")
 rownames(table) <- c("CaCO3", "CaO", "CO2")
 table
 ```
@@ -137,22 +141,49 @@ table
 
 \ans{Answer} $\rightarrow$
 
+\chemeq{C_{2}H_{4} + \frac{1}{2}O_{2} \rightarrow C_{2}H_{4}O}
 
+100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
 
+```{r}
+## reactants and products
+ethylene <- (85/100)*100 # 85% conversion
+oxygen <- ethylene/2
+ethy_o <- (94.12/100)*ethylene # 94.12% yield
 
+weight <- c((2*12+4*1), (2*16), (2*12+4*1+1*16)) # mol weights
+i_moles <- c(ethylene, oxygen, 0) # input moles
+i_mass <- c((ethylene*weight[1]),
+    oxygen*weight[2], 0) # input mass
+oxygen_at_end <- 100 - oxygen # unreacted oxygen
 
+o_moles <- c((100-ethylene), 
+    oxygen_at_end, ethy_o) # output moles
+mass <- c(ethylene*weight[1], oxygen*weight[2],
+    ethy_o*weight[3]) # mass
 
+## data frame to plot the stoitiometric table
+## the previous vectors are used as rows and columns
+table <- data.frame(weight, i_moles, i_mass, o_moles, mass)
+colnames(table) <- c("weight", "input moles", 
+"input mass", "output moles", "mass")
+rownames(table) <- c("ethylene", "oxygen", "ethylene oxide")
+table
+```
 
+# Butane is burned in a combustion chamber.
 
+## Calculate kmol of O~2~ required for 100 kmol of C~4~H~10~ fed for complete combustion.
 
+## If we want to feed 20% excess over the theoretical value, calculate kmol of O~2~ to be fed for 100 kmol of butane.
 
+## Calculate air fed to supply air calculated in 6.2 
 
+## Calculate percentage molar composition of product gas assuming complete combustion with feed as in 6.3
 
+## Calculate kmol of air fed to supply O~2~ calculated in 6.2
 
-
-
-
-
+\ans{Answer} $\rightarrow$
 
 # A combustion chamber is filled with butane and excess air. The composition of combustion gases (by volume) is CO~2~ = 9.39%, H~2~O = 11.73%, O~2~ = 4.70% and N~2~ = 74.13
 
