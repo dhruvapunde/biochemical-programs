@@ -1,6 +1,7 @@
 ---
 title: \textbf{\huge{Biochemical Process Calculation Tutorials}}
-author: \textbf{\large{Dhruva Punde}}
+author: \textbf{\Large{Dhruva Punde}}
+fontsize: 11pt
 output: 
     pdf_document:
         extra_dependencies: ["amsmath", "amssymb", "fancyhdr"]
@@ -15,16 +16,17 @@ output:
 \rhead{}
 \setlength{\headheight}{14.0pt}
 
+\definecolor{shadecolor}{RGB}{230, 230, 230}
+
 \newcommand{\chemeq}[1]{$$\mathrm{#1}$$}
 \newcommand{\ans}[1]{\textbf{\underline{#1}}}
 
-\Large
+\large
 
 ```{r echo=FALSE}
 ## 3 digits afer decimal point
 options(digits=3)
 ```
-
 
 # Consider combustion of butane that forms the the stuff in LPG cylinder. Calculate for 1 kmol of butane burning:
 
@@ -70,6 +72,8 @@ Percentage of CO~2~ is: **`r carbondioxide*100/final`%**
 Percentage of H~2~O is: **`r water*100/final`%**  
 Percentage of N~2~ is: **`r nitrogen*100/final`%**  
 
+\rule{476pt}{0.5mm}
+
 # A coke is known to contain 90% carbon and 10% non-combustible ash (by weight).
 
 ## How many moles of O~2~ are theoretically required to burn 100 kg of coke completely.
@@ -109,6 +113,8 @@ Percent of CO~2~ is: **`r carbondioxide*100/final`%**
 Percent of O~2~ (excess) is: **`r oxygen_at_end*100/final`%**  
 Percent of N~2~ is: **`r nitrogen*100/final`%**  
 
+\rule{476pt}{0.5mm}
+
 # Find out quantity of reactant to produce 1000 kg of methanol.
 
 \ans{Answer} $\rightarrow$
@@ -133,11 +139,17 @@ hydrogen <- hydrogen*2
 CO required is: **`r carbonmono` kg**, that in Kmol is: **`r carbonmono/28` Kmol**  
 H~2~ required is: **`r hydrogen` kg**, that in Kmol is: **`r hydrogen/2` Kmol**  
 
+\rule{476pt}{0.5mm}
+
 # A process in which 500 kg of CaCO~3~ produces CaO (calcination reaction) with 90%. Prepare stoitiometric table.
 
 \ans{Answer} $\rightarrow$
 
 \chemeq{CaCO_{3} \rightarrow CaO + CO_{2}}
+
+For 500 kg of CaCO~3~, we have to convert the weight to moles by dividing the weight by the molecular weight. Since 90% of CaCO~3~ is reacted, the moles of the products would also change accordingly, and the unreacted CaCO~3~ would be present in the product. The weight of the products can be calculated by multiplying the number of moles by the molecular weight.
+
+In this program, there are a series of vectors which each correspond to weight, input moles, input mass, output moles and mass. A data frame is formed from these individual vectors and printed. The columns and rows and named accordingly. This forms the stoitiometric table.
 
 ```{r, attr.source='.numberLines'}
 moles <- 500/100 # kg to moles
@@ -159,6 +171,8 @@ rownames(table) <- c("CaCO3", "CaO", "CO2")
 table
 ```
 
+\rule{476pt}{0.5mm}
+
 # Ethylene oxide is prepared by oxidation of ethylene. 100 kmol of ethylene and 100 kmol of O~2~ are charged to reactor. Percent conversion of ethylene is 85%, yield of ethylene oxide is 94.12%. Prepare stoitiometric table.
 
 \ans{Answer} $\rightarrow$
@@ -166,6 +180,10 @@ table
 \chemeq{C_{2}H_{4} + \frac{1}{2}O_{2} \rightarrow C_{2}H_{4}O}
 
 100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
+
+The percent conversion of ethylene is 85%, so the number of moles of oxygen and ethylene oxide would be different than the coefficients. Also the yield of ethylene oxide is 94.12%, which further changes the number of moles of ethylene oxide produced. This is calculated in the program below.
+
+In this program, there are a series of vectors which correspond to weight, input moles, input mass, output moles, mass. A data frame is formed from these individual vectors and printed. The columns and rows and named accordingly. This forms the stoitiometric table.
 
 ```{r, attr.source='.numberLines'}
 ## reactants and products
@@ -192,6 +210,8 @@ colnames(table) <- c("weight", "input moles",
 rownames(table) <- c("ethylene", "oxygen", "ethylene oxide")
 table
 ```
+ 
+\rule{476pt}{0.5mm}
 
 # Butane is burned in a combustion chamber.
 
@@ -206,6 +226,14 @@ table
 \ans{Answer} $\rightarrow$
 
 \chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
+
+For the kmol of constituents produced and required, we have to multiply the coefficients by a known value, which in this case is that of butane (100 kmol). The coefficients are then calculated in the following program.
+
+For excess 20% O~2~, the number of moles of O~2~ would change, however since butane is the limiting reagent, the unreacted O~2~ would end up in the product side.
+
+During incomplete combustion, CO is formed instead of CO~2~, this further changes the coefficients of the constituents.
+
+When 80% of butane is reacted, the number of moles of butane changes, while changing the number of moles of the other coefficients as well. The unreacted butane is also present in the product side, which is also calculated by the program below.
 
 ```{r, attr.source='.numberLines'}
 ## reactants and products
@@ -231,6 +259,8 @@ Percentage of O~2~ (excess) is: **`r oxygen_at_end*100/final`%**
 Percentage of H~2~O is: **`r water*100/final`%**  
 Percentage of N~2~ is: **`r nitrogen*100/final`%**  
 
+\rule{476pt}{0.5mm}
+
 # A combustion chamber is filled with butane and excess air. The composition of combustion gases (by volume) is CO~2~ = 9.39%, H~2~O = 11.73%, O~2~ = 4.70% and N~2~ = 74.13
 
 ## Find percent excess air used and mole ratio of air to butane used for complete combustion.
@@ -243,7 +273,10 @@ Percentage of N~2~ is: **`r nitrogen*100/final`%**
 
 \chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
 
-Assuming for 100 kmol of composition gas:
+In this reaction, we assume 100 kmol of product gas is produced. Which gives us 9.39 kmol of CO~2~ and 11.73 kmol of H~2~O in the products. Dividing these values by the coefficients we can find out the number of moles of butane and O~2~, and then calculate the total amount of O~2~ by adding the unreacted oxygen in this value.
+
+The composition of the product gas when 80% butane reacts is calculated by calculating the coefficient of butane and then
+calculating the coefficients of the other constituents, this is done in the following program. The percentage composition of the product gas is calculated by dividing the number of moles of a constituent by the sum of the number of moles of the constituents in the product gas times 100.
 
 ```{r, attr.source='.numberLines'}
 # reactants and products
