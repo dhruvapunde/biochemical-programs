@@ -279,7 +279,7 @@ The composition of the product gas when 80% butane reacts is calculated by calcu
 calculating the coefficients of the other constituents, this is done in the following program. The percentage composition of the product gas is calculated by dividing the number of moles of a constituent by the sum of the number of moles of the constituents in the product gas times 100.
 
 ```{r, attr.source='.numberLines'}
-# reactants and products
+## reactants and products
 carbondioxide <- 9.39
 butane <- 9.39/4
 oxygen <- butane*6.5
@@ -317,3 +317,4 @@ Percentage of butane is: **`r (100/80*butane-butane)*100/final`%**
 Percentage of N~2~ is: **`r nitrogen*100/final`%**  
 Percentage of O~2~ is: **`r oxygen_at_end*100/final`%**  
 
+\rule{476pt}{0.5mm}
