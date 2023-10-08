@@ -4,12 +4,14 @@ author: \textbf{\Large{Dhruva Punde}}
 fontsize: 11pt
 output: 
     pdf_document:
-        extra_dependencies: ["amsmath", "amssymb", "fancyhdr"]
+        extra_dependencies: ["fancyhdr"]
         toc: true
         toc_depth: 2
         number_sections: true
         df_print: kable
 ---
+
+\large
 
 \pagestyle{fancy}
 \lhead{\large{Biochemical Process Calculation Tutorials}}
@@ -19,13 +21,11 @@ output:
 \definecolor{shadecolor}{RGB}{230, 230, 230}
 
 \newcommand{\chemeq}[1]{$$\mathrm{#1}$$}
-\newcommand{\ans}[1]{\textbf{\underline{#1}}}
-
-\large
+\newcommand{\ans}{\textbf{\underline{Answer}} $\rightarrow$}
 
 ```{r echo=FALSE}
-## 3 digits afer decimal point
-options(digits=3)
+## 2 digits afer decimal point
+options(digits=2)
 ```
 
 # Consider combustion of butane that forms the the stuff in LPG cylinder. Calculate for 1 kmol of butane burning:
@@ -40,23 +40,21 @@ options(digits=3)
 
 ## Percent molar composition of product gas
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
 
 For the kmol of constituents produced and required, we have to multiply the coefficients by a known value, which in this case is that of butane (1 kmol). This calculation is done in the following program, along with the amount of air required and N~2~ present.
 
-The percentage composition is calculated by dividing the moles of the constituents by the sum of all the products times 100.
-
 ```{r, attr.source='.numberLines'}
 ## reactants and products
 butane <- 1
-oxygen <- 6.5*butane # part 1
-carbondioxide <- 4*butane # part 3
-water <- 5*butane # part 4
+oxygen <- butane*6.5 # part 1
+carbondioxide <- butane*4 # part 3
+water <- butane*4 # part 4
 
-air <- 100/21*oxygen # part 2
-nitrogen <- 79/21*oxygen
+air <- oxygen*(100/21) # part 2
+nitrogen <- oxygen*(79/21)
 final <- carbondioxide + water + nitrogen # part 5
 ```
 
@@ -68,9 +66,20 @@ Kmol of N~2~ required is: **`r nitrogen` kmol**
 
 Kmol of final gas produced is: **`r final` kmol**
 
-Percentage of CO~2~ is: **`r carbondioxide*100/final`%**  
-Percentage of H~2~O is: **`r water*100/final`%**  
-Percentage of N~2~ is: **`r nitrogen*100/final`%**  
+The percentage composition is calculated by dividing the moles of the constituents by the sum of all the products times 100.
+
+This function calculates the percentage composition by taking one parameter which is the constituent, multiplying it by 100 and dividing it by the sum of the products. It is used in the further numericals as well.
+
+```{r, attr.source='.numberLines'}
+percentage <- function(variable)
+    {
+        (variable*100)/final
+    }
+```
+
+Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
+Percentage of H~2~O is: **`r percentage(water)`%**  
+Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
 
 \rule{476pt}{0.5mm}
 
@@ -80,7 +89,7 @@ Percentage of N~2~ is: **`r nitrogen*100/final`%**
 
 ## If 50% excess of air is supplied, calculate analysis of gases at end of combustion
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{C + O_{2} \rightarrow CO_{2}}
 
@@ -98,8 +107,8 @@ coke <- (90/100*100)/12 # 90% by weight to moles
 oxygen <- coke*1 # part 1
 carbondioxide <- coke*1
 
-nitrogen <- 79/21*oxygen
-excess <- (50/100*oxygen)+oxygen # 50% excess, part 2
+nitrogen <- oxygen*(79/21)
+excess <- (oxygen*50/100)+oxygen # 50% excess, part 2
 oxygen_at_end <- excess - oxygen # excess - theoretical
 final <- nitrogen + oxygen_at_end + carbondioxide # product gas
 ```
@@ -109,15 +118,15 @@ Moles of O~2~ at end (excess) is: **`r oxygen_at_end` moles**, in kg that is: **
 Moles of N~2~ at the end is: **`r nitrogen` moles**, in kg that is: **`r nitrogen*28` kg**  
 Moles of CO~2~ produced is: **`r carbondioxide` moles**, in kg that is: **`r carbondioxide*44` kg**
 
-Percent of CO~2~ is: **`r carbondioxide*100/final`%**  
-Percent of O~2~ (excess) is: **`r oxygen_at_end*100/final`%**  
-Percent of N~2~ is: **`r nitrogen*100/final`%**  
+Percent of CO~2~ is: **`r percentage(carbondioxide)`%**  
+Percent of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**  
+Percent of N~2~ is: **`r percentage(nitrogen)`%**  
 
 \rule{476pt}{0.5mm}
 
 # Find out quantity of reactant to produce 1000 kg of methanol.
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{CO + 2H_{2} \rightarrow CH_{3}OH}
 
@@ -126,24 +135,32 @@ For 1000 kg of methanol, we first have to convert the weight into number of mole
 The amount of CO and H~2~ required is then calculated by multiplying the coefficients by this value which is done in the program below. It is also converted to kg by multiplying the number of moles by the molecular weight.
 
 ```{r, attr.source='.numberLines'}
-## reactants and products
-methanol <- 1000/(12*1+4*1+16*1) # kg to moles
-carbonmono <- 1*methanol
-hydrogen <- 2*methanol
-
-## by weight
-carbonmono <- carbonmono*28 
-hydrogen <- hydrogen*2
+## reactants and products by moles
+## dividing kg by molecular weight
+methanol <- 1000/(12*1+4*1+16*1) 
+carbonmono <- methanol*1
+hydrogen <- methanol*2
 ```
 
-CO required is: **`r carbonmono` kg**, that in Kmol is: **`r carbonmono/28` Kmol**  
-H~2~ required is: **`r hydrogen` kg**, that in Kmol is: **`r hydrogen/2` Kmol**  
+Moles of CO required is: **`r carbonmono` moles**  
+Moles of H~2~ required is: **`r hydrogen` moles**  
+
+```{r, attr.source='.numberLines'}
+## reactants and products by kg
+## multiplying moles by molecular weight
+methanol <- methanol*(12+1*4+16)
+carbonmono <- carbonmono*(12+16)
+hydrogen <- hydrogen*(2)
+```
+
+Amount of CO required is: **`r carbonmono` kg**  
+Amount of H~2~ required is: **`r hydrogen` kg**  
 
 \rule{476pt}{0.5mm}
 
 # A process in which 500 kg of CaCO~3~ produces CaO (calcination reaction) with 90%. Prepare stoitiometric table.
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{CaCO_{3} \rightarrow CaO + CO_{2}}
 
@@ -153,21 +170,21 @@ In this program, there are a series of vectors which each correspond to weight, 
 
 ```{r, attr.source='.numberLines'}
 moles <- 500/100 # kg to moles
-p_moles <- 90/100*moles # reacted moles
+p_moles <- moles*(90/100) # reacted moles
 weight <- c((40+12+3*16), (40+16), (12+2*16)) # mol weights
 i_moles <- c(moles, 0, 0) # input moles
 i_mass <- c(500, 0, 0) # input mass (without 90%)
 moles <- moles - p_moles # remaining moles of CaCO3
 o_moles <- c(moles, p_moles, p_moles) # output moles
-mass <- c(500, 4.5*weight[2], 4.5*weight[3]) # mass
+mass <- c(500, weight[2]*4.5, weight[3]*4.5) # mass
 
 ## data frame to plot the stoitiometric table
 ## the previous vectors are used as rows and columns
 table <- data.frame(
     weight, i_moles, i_mass, o_moles, mass)
 colnames(table) <- c("weight", "input moles", 
-    "input mass", "output moles", "mass")
-rownames(table) <- c("CaCO3", "CaO", "CO2")
+    "input mass", "output moles", "mass") # column names
+rownames(table) <- c("CaCO3", "CaO", "CO2") # row names
 table
 ```
 
@@ -175,7 +192,7 @@ table
 
 # Ethylene oxide is prepared by oxidation of ethylene. 100 kmol of ethylene and 100 kmol of O~2~ are charged to reactor. Percent conversion of ethylene is 85%, yield of ethylene oxide is 94.12%. Prepare stoitiometric table.
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{C_{2}H_{4} + \frac{1}{2}O_{2} \rightarrow C_{2}H_{4}O}
 
@@ -189,7 +206,7 @@ In this program, there are a series of vectors which correspond to weight, input
 ## reactants and products
 ethylene <- (85/100)*100 # 85% conversion
 oxygen <- ethylene/2
-ethy_o <- (94.12/100)*ethylene # 94.12% yield
+ethy_o <- ethylene*(94.12/100) # 94.12% yield
 
 weight <- c((2*12+4*1), (2*16), (2*12+4*1+1*16)) # mol weights
 i_moles <- c(ethylene, oxygen, 0) # input moles
@@ -206,8 +223,8 @@ mass <- c(ethylene*weight[1], oxygen*weight[2],
 ## the previous vectors are used as rows and columns
 table <- data.frame(weight, i_moles, i_mass, o_moles, mass)
 colnames(table) <- c("weight", "input moles", 
-"input mass", "output moles", "mass")
-rownames(table) <- c("ethylene", "oxygen", "ethylene oxide")
+"input mass", "output moles", "mass") # column names
+rownames(table) <- c("ethylene", "oxygen", "ethylene oxide") # row names
 table
 ```
  
@@ -223,7 +240,7 @@ table
 
 ## Calculate percentage molar composition of product gas assuming complete combustion with feed as in 6.3
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
 
@@ -242,9 +259,9 @@ oxygen <- butane*6.5 # part 1
 carbondioxide <- butane*4
 water <- butane*5
 
-excess <- (20/100*oxygen) + oxygen # 20% excess, part 2
-air <- (100/21)*excess # part 3
-nitrogen <- (79/21)*excess
+excess <- (oxygen*(20/100)) + oxygen # 20% excess, part 2
+air <- excess*(100/21) # part 3
+nitrogen <- excess*(79/21)
 oxygen_at_end <- excess - oxygen # excess - theoretical
 final <- (carbondioxide + water + nitrogen
     + oxygen_at_end) # part 5
@@ -254,10 +271,10 @@ Kmol of O~2~ required for complete combustion is: **`r oxygen` Kmol**
 Kmol of 20% excess O~2~ fed to butane is: **`r excess` Kmol**  
 Kmol of air fed is: **`r air` Kmol**  
 
-Percentage of CO~2~ is: **`r carbondioxide*100/final`%**  
-Percentage of O~2~ (excess) is: **`r oxygen_at_end*100/final`%**  
-Percentage of H~2~O is: **`r water*100/final`%**  
-Percentage of N~2~ is: **`r nitrogen*100/final`%**  
+Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
+Percentage of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**  
+Percentage of H~2~O is: **`r percentage(water)`%**  
+Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
 
 \rule{476pt}{0.5mm}
 
@@ -269,7 +286,7 @@ Percentage of N~2~ is: **`r nitrogen*100/final`%**
 
 ## Find composition of combustion gases for 80% combustion of butane.
 
-\ans{Answer} $\rightarrow$
+\ans
 
 \chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
 
@@ -281,40 +298,43 @@ calculating the coefficients of the other constituents, this is done in the foll
 ```{r, attr.source='.numberLines'}
 ## reactants and products
 carbondioxide <- 9.39
-butane <- 9.39/4
+butane <- carbondioxide/4
 oxygen <- butane*6.5
 water <- butane*5
 
+nitrogen <- 74.13
 oxygen_at_end <- 4.70
 excess <- oxygen + oxygen_at_end # end + theoretical
-air <- 100/21*excess
-nitrogen <- 74.13
-
-## for 80% conversion
-butane <- 80/100*butane
-oxygen <- butane*6.5
-carbondioxide <- butane*4
-water <- butane*5
-
-oxygen_at_end <- excess - oxygen # excess - theoretical
-final <- (oxygen_at_end + carbondioxide + water
-    + nitrogen + (100/80*butane-butane)) # part 3
+air <- excess*(100/21)
 ```
 
-Mole ratio of air to butane for complete combustion is: **`r air` : `r butane*100/80`**  
+Mole ratio of air to butane for complete combustion is: **`r air` : `r butane`**
 
 For incomplete combustion, the reaction is:
 
 \chemeq{C_{4}H_{10} + 4.5O_{2} \rightarrow 4CO + 5H_{2}O}
 
-The elements of combustion gas are: **CO, H~2~O, O~2~ (excess) and N~2~**
+For incomplete combustion, the elements of combustion gases are: **CO, H~2~O, O~2~ (excess) and N~2~**
 
 For 80% combustion of butane,
 
-Percentage of CO~2~ is: **`r carbondioxide*100/final`%**  
-Percentage of H~2~O is: **`r water*100/final`%**  
-Percentage of butane is: **`r (100/80*butane-butane)*100/final`%**  
-Percentage of N~2~ is: **`r nitrogen*100/final`%**  
-Percentage of O~2~ is: **`r oxygen_at_end*100/final`%**  
+```{r, attr.source='.numberLines'}
+## reactants and products for 80% conversion
+butane <- butane*(80/100)
+oxygen <- butane*6.5
+water <- butane*5
+carbondioxide <- butane*4
+
+oxygen_at_end <- excess - oxygen # excess - theoretical
+final <- (water + carbondioxide + nitrogen
+    + oxygen_at_end + (butane*(100/80)-butane)) # part 3
+```
+
+Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
+Percentage of H~2~O is: **`r percentage(water)`%**  
+Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
+Percentage of O~2~ is: **`r percentage(oxygen_at_end)`%**  
+Percentage of butane (unreacted) is: **`r percentage(butane)`%**  
 
 \rule{476pt}{0.5mm}
+
