@@ -24,7 +24,7 @@ oxygen = float(water+2*carbondioxide-o)/2
 # function to check if the number is not a decimal. If it is not a decimal then the datatype is reassigned as integer
 def is_int(x):
     if(x.is_integer()):
-     x = int(x)
+        x = int(x)
 
 # checks for reactants and products
 is_int(c)
