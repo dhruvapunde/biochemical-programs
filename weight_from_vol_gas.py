@@ -1,5 +1,7 @@
-## This program uses the Ideal Gas Law to find grams of a gas from a particular volume at a given temperature and pressure
-## Ideal Gas Law: PV = nRT
+"""
+This program uses the Ideal Gas Law to find grams of a gas from a particular volume at a given temperature and pressure
+Ideal Gas Law: PV = nRT
+"""
 
 print()
 volume = float(input("Enter the volume of gas in litres: "))
