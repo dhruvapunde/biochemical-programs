@@ -1,6 +1,10 @@
-# function to prevent a non negative number being entered
+"""
+This program calculates the percent of oxygen in the reactants of combustion of any hydrocarbon which follows the syntax of "C_x H_y O_z" where x, y and z are any whole numbers respectively. It also outputs the balanced chemical reaction.
+"""
+
 def non_negative(x):
-    if(x < 0):
+    "function to prevent a non negative number being entered"
+    if x < 0:
         print("Please enter a non negative value")
 
 print()
@@ -21,18 +25,14 @@ water = float(h/2)
 # oxyen in reactant
 oxygen = float(water+2*carbondioxide-o)/2
 
-# function to check if the number is not a decimal. If it is not a decimal then the datatype is reassigned as integer
-def is_int(x):
-    if(x.is_integer()):
-        x = int(x)
+def is_int(var_1, var_2, var_3, var_4, var_5, var_6):
+    "function to check if the number is not a decimal. If it is not a decimal then the datatype is reassigned as integer"
+    for i in (var_1, var_2, var_3, var_4, var_5, var_6):
+        if i.is_integer():
+            i = int(i)
 
 # checks for reactants and products
-is_int(c)
-is_int(h)
-is_int(o)
-is_int(carbondioxide)
-is_int(oxygen)
-is_int(water)
+is_int(c, h, o, carbondioxide, oxygen, water)
 
 # final reaction
 print()
@@ -67,6 +67,6 @@ lost_o = float(100-lost_c)
 
 # final percent
 print()
-print("The percentage of oxygen lost as CO_2 is: %.3f" % lost_c)
-print("The percentage of oxygen lost as H_2O is: %.3f" % lost_o)
+print(f"The percentage of oxygen lost as CO_2 is: {lost_c:.3f}")
+print(f"The percentage of oxygen lost as H_2O is: {lost_o:.3f}")
 print()
