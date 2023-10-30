@@ -1,5 +1,8 @@
 """
-This program calculates the percent of oxygen in the reactants of combustion of any hydrocarbon which follows the syntax of "C_x H_y O_z" where x, y and z are any whole numbers respectively. It also outputs the balanced chemical reaction.
+This program calculates the percent of oxygen in the reactants of
+combustion of any hydrocarbon which follows the syntax of "C_x H_y O_z"
+where x, y and z are any whole numbers respectively.
+It also outputs the balanced chemical reaction.
 """
 
 def non_negative(x):
@@ -25,14 +28,15 @@ water = float(h/2)
 # oxyen in reactant
 oxygen = float(water+2*carbondioxide-o)/2
 
-def is_int(var_1, var_2, var_3, var_4, var_5, var_6):
+def is_int(a):
     "function to check if the number is not a decimal. If it is not a decimal then the datatype is reassigned as integer"
-    for i in (var_1, var_2, var_3, var_4, var_5, var_6):
+    for i in a:
         if i.is_integer():
             i = int(i)
 
 # checks for reactants and products
-is_int(c, h, o, carbondioxide, oxygen, water)
+some_list = (c, h, o, carbondioxide, oxygen, water)
+is_int(some_list)
 
 # final reaction
 print()
