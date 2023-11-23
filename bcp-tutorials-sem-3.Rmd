@@ -4,7 +4,7 @@ author: \textbf{\Large{Dhruva Punde}}
 fontsize: 11pt
 output: 
     pdf_document:
-        extra_dependencies: ["fancyhdr", "amsmath"]
+        extra_dependencies: ["fancyhdr", "amsmath", "hyperref"]
         toc: true
         toc_depth: 2
         number_sections: true
@@ -460,3 +460,9 @@ Yield of methane in terms of CO~2~ is: **`r methane/carbondioxide*100`%**
 The composition of feed is **`r carbondioxide` moles of CO~2~** and **`r hydrogen` moles of H~2~**  
 
 \rule{476pt}{0.5mm}
+
+\begin{flushleft}
+    \footnotesize
+    \textit{source code of the document:}
+    \url{https://github.com/dhruvapunde/biochemical-programs/blob/main/bcp-tutorials-sem-3.Rmd}
+\end{flushleft}
