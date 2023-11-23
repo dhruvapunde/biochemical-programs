@@ -4,14 +4,13 @@ author: \textbf{\Large{Dhruva Punde}}
 fontsize: 11pt
 output: 
     pdf_document:
-        extra_dependencies: ["fancyhdr"]
+        extra_dependencies: ["fancyhdr", "amsmath"]
         toc: true
         toc_depth: 2
         number_sections: true
         df_print: kable
+classoption: a4paper
 ---
-
-\large
 
 \pagestyle{fancy}
 \lhead{\large{Biochemical Process Calculation Tutorials}}
@@ -20,31 +19,34 @@ output:
 
 \definecolor{shadecolor}{RGB}{230, 230, 230}
 
-\newcommand{\chemeq}[1]{$$\mathrm{#1}$$}
+\newcommand{\chemeq}[1]{\[\mathrm{#1}\]}
 \newcommand{\ans}{\textbf{\underline{Answer}} $\rightarrow$}
 
 ```{r echo=FALSE}
-## 2 digits afer decimal point
-options(digits=2)
+## 3 digits afer decimal point
+options(digits = 3)
 ```
+
+\rule{476pt}{0.5mm}
+
 
 # Consider combustion of butane that forms the the stuff in LPG cylinder. Calculate for 1 kmol of butane burning:
 
-## Kmol of O~2~ required
+## Kmol of O~2~ required.
 
-## Kmol of air required
+## Kmol of air required.
 
-## Kmol of CO~2~ produced
+## Kmol of CO~2~ produced.
 
-## Kmol of H~2~O produced
+## Kmol of H~2~O produced.
 
-## Percent molar composition of product gas
+## Percent molar composition of product gas.
 
 \ans
 
-\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
+\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O \tag{1}}
 
-For the kmol of constituents produced and required, we have to multiply the coefficients by a known value, which in this case is that of butane (1 kmol). This calculation is done in the following program, along with the amount of air required and N~2~ present.
+\quad For the kmol of constituents produced and required, we have to multiply the coefficients by a known value, which in this case is that of butane (1 kmol). This calculation is done in the following program, along with the amount of air required and N~2~ present.
 
 ```{r, attr.source='.numberLines'}
 ## reactants and products
@@ -72,9 +74,9 @@ This function calculates the percentage composition by taking one parameter whic
 
 ```{r, attr.source='.numberLines'}
 percentage <- function(variable)
-    {
-        (variable*100)/final
-    }
+{
+    (variable*100)/final
+}
 ```
 
 Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
@@ -87,13 +89,13 @@ Percentage of N~2~ is: **`r percentage(nitrogen)`%**
 
 ## How many moles of O~2~ are theoretically required to burn 100 kg of coke completely.
 
-## If 50% excess of air is supplied, calculate analysis of gases at end of combustion
+## If 50% excess of air is supplied, calculate analysis of gases at end of combustion.
 
 \ans
 
-\chemeq{C + O_{2} \rightarrow CO_{2}}
+\chemeq{C + O_{2} \rightarrow CO_{2} \tag{1}}
 
-Since the coke contains 90% combustible carbon, we have to calculate the total amount of carbon present by weight and convert that into moles.  
+\quad Since the coke contains 90% combustible carbon, we have to calculate the total amount of carbon present by weight and convert that into moles.  
 
 The amount of O~2~ theoretically required and the amount of CO~2~ produced is then calculated by multiplying the coefficients by this value, which is calculated in the program below. The mass in kg is also calculated by multiplying the moles by the molecular weight of the constituents.
 
@@ -108,7 +110,7 @@ oxygen <- coke*1 # part 1
 carbondioxide <- coke*1
 
 nitrogen <- oxygen*(79/21)
-excess <- (oxygen*50/100)+oxygen # 50% excess, part 2
+excess <- (oxygen*50/100) + oxygen # 50% excess, part 2
 oxygen_at_end <- excess - oxygen # excess - theoretical
 final <- nitrogen + oxygen_at_end + carbondioxide # product gas
 ```
@@ -128,9 +130,9 @@ Percent of N~2~ is: **`r percentage(nitrogen)`%**
 
 \ans
 
-\chemeq{CO + 2H_{2} \rightarrow CH_{3}OH}
+\chemeq{CO + 2H_{2} \rightarrow CH_{3}OH \tag{1}}
 
-For 1000 kg of methanol, we first have to convert the weight into number of moles by dividing the weight by molecular weight.
+\quad For 1000 kg of methanol, we first have to convert the weight into number of moles by dividing the weight by molecular weight.
 
 The amount of CO and H~2~ required is then calculated by multiplying the coefficients by this value which is done in the program below. It is also converted to kg by multiplying the number of moles by the molecular weight.
 
@@ -162,9 +164,9 @@ Amount of H~2~ required is: **`r hydrogen` kg**
 
 \ans
 
-\chemeq{CaCO_{3} \rightarrow CaO + CO_{2}}
+\chemeq{CaCO_{3} \rightarrow CaO + CO_{2} \tag{1}}
 
-For 500 kg of CaCO~3~, we have to convert the weight to moles by dividing the weight by the molecular weight. Since 90% of CaCO~3~ is reacted, the moles of the products would also change accordingly, and the unreacted CaCO~3~ would be present in the product. The weight of the products can be calculated by multiplying the number of moles by the molecular weight.
+\quad For 500 kg of CaCO~3~, we have to convert the weight to moles by dividing the weight by the molecular weight. Since 90% of CaCO~3~ is reacted, the moles of the products would also change accordingly, and the unreacted CaCO~3~ would be present in the product. The weight of the products can be calculated by multiplying the number of moles by the molecular weight.
 
 In this program, there are a series of vectors which each correspond to weight, input moles, input mass, output moles and mass. A data frame is formed from these individual vectors and printed. The columns and rows and named accordingly. This forms the stoitiometric table.
 
@@ -194,9 +196,9 @@ table
 
 \ans
 
-\chemeq{C_{2}H_{4} + \frac{1}{2}O_{2} \rightarrow C_{2}H_{4}O}
+\chemeq{C_{2}H_{4} + 0.5O_{2} \rightarrow C_{2}H_{4}O \tag{1}}
 
-100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
+\quad 100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
 
 The percent conversion of ethylene is 85%, so the number of moles of oxygen and ethylene oxide would be different than the coefficients. Also the yield of ethylene oxide is 94.12%, which further changes the number of moles of ethylene oxide produced. This is calculated in the program below.
 
@@ -242,9 +244,9 @@ table
 
 \ans
 
-\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
+\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O \tag{1}}
 
-For the kmol of constituents produced and required, we have to multiply the coefficients by a known value, which in this case is that of butane (100 kmol). The coefficients are then calculated in the following program.
+\quad For the kmol of constituents produced and required, we have to multiply the coefficients by a known value, which in this case is that of butane (100 kmol). The coefficients are then calculated in the following program.
 
 For excess 20% O~2~, the number of moles of O~2~ would change, however since butane is the limiting reagent, the unreacted O~2~ would end up in the product side.
 
@@ -288,9 +290,9 @@ Percentage of N~2~ is: **`r percentage(nitrogen)`%**
 
 \ans
 
-\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O}
+\chemeq{C_{4}H_{10} + 6.5O_{2} \rightarrow 4CO_{2} + 5H_{2}O \tag{1}}
 
-In this reaction, we assume 100 kmol of product gas is produced. Which gives us 9.39 kmol of CO~2~ and 11.73 kmol of H~2~O in the products. Dividing these values by the coefficients we can find out the number of moles of butane and O~2~, and then calculate the total amount of O~2~ by adding the unreacted oxygen in this value.
+\quad In this reaction, we assume 100 kmol of product gas is produced. Which gives us 9.39 kmol of CO~2~ and 11.73 kmol of H~2~O in the products. Dividing these values by the coefficients we can find out the number of moles of butane and O~2~, and then calculate the total amount of O~2~ by adding the unreacted oxygen in this value.
 
 The composition of the product gas when 80% butane reacts is calculated by calculating the coefficient of butane and then
 calculating the coefficients of the other constituents, this is done in the following program. The percentage composition of the product gas is calculated by dividing the number of moles of a constituent by the sum of the number of moles of the constituents in the product gas times 100.
@@ -312,7 +314,7 @@ Mole ratio of air to butane for complete combustion is: **`r air` : `r butane`**
 
 For incomplete combustion, the reaction is:
 
-\chemeq{C_{4}H_{10} + 4.5O_{2} \rightarrow 4CO + 5H_{2}O}
+\chemeq{C_{4}H_{10} + 4.5O_{2} \rightarrow 4CO + 5H_{2}O \tag{2}}
 
 For incomplete combustion, the elements of combustion gases are: **CO, H~2~O, O~2~ (excess) and N~2~**
 
@@ -333,8 +335,128 @@ final <- (water + carbondioxide + nitrogen
 Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
 Percentage of H~2~O is: **`r percentage(water)`%**  
 Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
-Percentage of O~2~ is: **`r percentage(oxygen_at_end)`%**  
+Percentage of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**  
 Percentage of butane (unreacted) is: **`r percentage(butane)`%**  
 
 \rule{476pt}{0.5mm}
 
+# Ethylene oxide is produced by oxidation of ethylene. 100 kmol of ethylene is fed to a reactor and product is found to contain 80 kmol of ethylene oxide and 10 kmol of CO~2~. Calculate percent conversion of ethylene and yield percentage of ethylene oxide.
+
+\ans 
+
+\quad First reaction:
+\chemeq{C_{2}H_{4} + 0.5O_{2} \rightarrow C_{2}H_{4}O \tag{1}}
+
+\quad Second reaction (after oxidation):
+\chemeq{C_{2}H_{4} + 3O_{2} \rightarrow 2CO_{2} + 2H_{2} \tag{2}}
+
+Since 100 kmol of ethylene is fed to the reactor, theoretically 100 kmol of ethylene reacts with 50 kmol of O~2~ to produce 100 kmol of ethylene oxide. We also know that 10 kmol of CO~2~ is formed, from this we know that 5 kmol of ethylene reacts with 15 kmol of oxygen by looking at the coefficients.
+
+```{r, attr.source='.numberLines'}
+## second reaction
+carbondioxide <- 10 
+ethylene <- carbondioxide/2 
+
+## first reaction
+ethy_o <- 80
+ethylene <- ethy_o + ethylene # ethylene oxide + ethylene in second reaction
+```
+
+The percent conversion of Ethylene can be calculated by dividing the moles of Ethylene reacted to produce Ethylene Oxide by the number of moles present times 100.
+
+The yield percentage can be calculated by dividing the moles of Ethylene Oxide produced by the number of moles of Ethylene present in the first reaction times 100.
+
+Percent conversion of Ethylene Oxide is: **`r ethy_o/100*100`%**  
+Percent yield of Ethylene Oxide is: **`r ethy_o/ethylene*100`%**  
+
+\rule{476pt}{0.5mm}
+
+# A gas analysing CO~2~ = 5.5%, CO = 25%, H~2~ = 14% CH~4~ = 0.5% and N~2~ = 55% (by pressure) is burnt in furnace with air which is 10% excess over that required to burn CO, H~2~, CH~4~ completely. Give the analysis of product gas reaction assuming all reaction to completion.
+
+\ans
+
+\quad Reactions:
+
+\chemeq{2CO + O_{2} \rightarrow 2CO_{2} \tag{1}}
+
+\chemeq{2H_{2} + O_{2} \rightarrow 2H_{2}O \tag{2}}
+
+\chemeq{CH_{4} + 2O_{2} \rightarrow CO_{2} + H_{2}O \tag{3}}
+
+The percentage of gases in the furnace are by pressure, from the $PV = nRT$, Ideal Gas Law, we know that pressure percentage = volume percentage = molar percentage. So we shall assume the percentages as moles per 100 moles. However in the reactions above, we see that products like CO~2~ and H~2~O are also formed, these products will also be present in the furnace. We can find out the number of moles of these products by looking at the coefficients of the reactants.
+
+From the above reactions, we can also calculate the theoretical number of moles of O~2~ required to burn CO, H~2~ and CH~4~, which would be adding the coefficients of oxygen for all the 3 reactions, which is done by the program belo, which is done by the program below.
+
+```{r, attr.source='.numberLines'}
+## moles of gases present in furnace
+carbondioxide <- (5.5) + (25/2*2) + (0.5*1) # furnace + reaction 1 and 2
+carbonmono <- 25
+hydrogen <- 14
+methane <- 0.5
+nitrogen <- 55
+water <- (14/2*2)+(0.5*2) # reaction 2 and 3
+
+## amount of theoretical and excess oxygen
+oxygen <- (carbonmono/2)+(hydrogen/2)+(methane*2) # theoretical oxygen
+excess <- (oxygen*10/100)+oxygen # 10% excess
+oxygen_at_end <- excess - oxygen # excess - theoretical
+
+## moles of nitrogen, furnace + moles in air
+nitrogen <- nitrogen + (79/21*excess)
+
+## total moles of exiting gas
+final <- nitrogen + oxygen_at_end + carbondioxide + water
+```
+
+The gas at the end would contain N~2~, excess O~2~, CO~2~ and H~2~O. The analysis of gases can be calculated by dividing the moles of a particular gas by the summation of the total moles times 100.
+
+Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
+Percentage of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**  
+Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
+Percentage of H~2~O is: **`r percentage(water)`%**  
+
+\rule{476pt}{0.5mm}
+
+# A mixture of pure CO~2~ and H~2~ is passed over a Nickel catalyst. The temperature of catalyst bed is 588K and reacting pressure is 2.02 Mega Pascal gauge. The gas mixture leaving the reactor is analysed to contain 57.1% CO~2~, 41.1% of H~2~, 1.68% of CH~4~ and 0.12% of CO by volume.
+
+## Calculate percent conversion of CO~2~.
+
+## Calculate yield of methane in terms of CO~2~ reacted.
+
+## Calculate composition of feed.
+
+\ans 
+
+\quad Reactions: 
+
+\chemeq{CO_{2} + 4H_{2} \rightarrow CH_{4} + 2H_{2}O \tag{1}}
+
+\chemeq{CO_{2} + H_{2} \rightarrow CO + H_{2}O \tag{2}}
+
+Since the percentages are by volume, we can assume them to be mole percentages. The exiting gas contains CO~2~ and H~2~, so we can assume that CO~2~ and H~2~ do not react completely in the reactor and are present in excess.
+
+The exiting gas contains CH~4~ and CO, which are the products of the reactions above. Through this we can calculate the amount of CO~2~ and H~2~ theoretically required to react which produces the products by multiplying the moles of the products by the coefficients of the reactants.
+
+```{r, attr.source='.numberLines'}
+## products from the reactions 
+methane <- 1.68
+carbonmono <- 0.12
+
+## theoretical amount of hydrogen and carbondioxide
+carbondioxide <- methane + carbonmono
+hydrogen <- (methane/4) + carbonmono
+
+## amount of carbondioxide and hydrogen fed in the reactor
+carbondioxide <- carbondioxide + 57.1
+hydrogen <- hydrogen + 41.1
+```
+
+Percent conversion of CO~2~ is calculated by dividing the moles of CO~2~ reacted by the total CO~2~ fed times 100.
+
+Yield of CH~4~ is calculated by dividing the number of moles of CH~4~ by the total moles of CO~2~ times 100. 
+
+Percent conversion of CO~2~ is: **`r (carbondioxide-57.1)/carbondioxide*100`%**  
+Yield of methane in terms of CO~2~ is: **`r methane/carbondioxide*100`%**  
+The composition of feed is **`r carbondioxide` moles of CO~2~** and **`r hydrogen` moles of H~2~**  
+
+\rule{476pt}{0.5mm}
