@@ -19,16 +19,16 @@ classoption: a4paper
 
 \definecolor{shadecolor}{RGB}{230, 230, 230}
 
-\newcommand{\chemeq}[1]{\[\mathrm{#1}\]}
+\newcommand{\chemeq}[1]{{\Large\[\mathrm{#1}\]}}
 \newcommand{\ans}{\textbf{\underline{Answer}} $\rightarrow$}
+\newcommand{\rulline}{\rule{456pt}{0.5mm}}
 
 ```{r echo=FALSE}
 ## 3 digits afer decimal point
 options(digits = 3)
 ```
 
-\rule{476pt}{0.5mm}
-
+\rulline
 
 # Consider combustion of butane that forms the the stuff in LPG cylinder. Calculate for 1 kmol of butane burning:
 
@@ -53,7 +53,7 @@ options(digits = 3)
 butane <- 1
 oxygen <- butane*6.5 # part 1
 carbondioxide <- butane*4 # part 3
-water <- butane*4 # part 4
+water <- butane*5 # part 4
 
 air <- oxygen*(100/21) # part 2
 nitrogen <- oxygen*(79/21)
@@ -83,7 +83,7 @@ Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**
 Percentage of H~2~O is: **`r percentage(water)`%**  
 Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # A coke is known to contain 90% carbon and 10% non-combustible ash (by weight).
 
@@ -109,8 +109,8 @@ coke <- (90/100*100)/12 # 90% by weight to moles
 oxygen <- coke*1 # part 1
 carbondioxide <- coke*1
 
-nitrogen <- oxygen*(79/21)
 excess <- (oxygen*50/100) + oxygen # 50% excess, part 2
+nitrogen <- excess*(79/21)
 oxygen_at_end <- excess - oxygen # excess - theoretical
 final <- nitrogen + oxygen_at_end + carbondioxide # product gas
 ```
@@ -124,7 +124,7 @@ Percent of CO~2~ is: **`r percentage(carbondioxide)`%**
 Percent of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**  
 Percent of N~2~ is: **`r percentage(nitrogen)`%**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # Find out quantity of reactant to produce 1000 kg of methanol.
 
@@ -158,7 +158,7 @@ hydrogen <- hydrogen*(2)
 Amount of CO required is: **`r carbonmono` kg**  
 Amount of H~2~ required is: **`r hydrogen` kg**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # A process in which 500 kg of CaCO~3~ produces CaO (calcination reaction) with 90%. Prepare stoitiometric table.
 
@@ -190,7 +190,7 @@ rownames(table) <- c("CaCO3", "CaO", "CO2") # row names
 table
 ```
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # Ethylene oxide is prepared by oxidation of ethylene. 100 kmol of ethylene and 100 kmol of O~2~ are charged to reactor. Percent conversion of ethylene is 85%, yield of ethylene oxide is 94.12%. Prepare stoitiometric table.
 
@@ -230,7 +230,7 @@ rownames(table) <- c("ethylene", "oxygen", "ethylene oxide") # row names
 table
 ```
  
-\rule{476pt}{0.5mm}
+\rulline
 
 # Butane is burned in a combustion chamber.
 
@@ -278,7 +278,7 @@ Percentage of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**
 Percentage of H~2~O is: **`r percentage(water)`%**  
 Percentage of N~2~ is: **`r percentage(nitrogen)`%**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # A combustion chamber is filled with butane and excess air. The composition of combustion gases (by volume) is CO~2~ = 9.39%, H~2~O = 11.73%, O~2~ = 4.70% and N~2~ = 74.13
 
@@ -338,7 +338,7 @@ Percentage of N~2~ is: **`r percentage(nitrogen)`%**
 Percentage of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**  
 Percentage of butane (unreacted) is: **`r percentage(butane)`%**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # Ethylene oxide is produced by oxidation of ethylene. 100 kmol of ethylene is fed to a reactor and product is found to contain 80 kmol of ethylene oxide and 10 kmol of CO~2~. Calculate percent conversion of ethylene and yield percentage of ethylene oxide.
 
@@ -369,7 +369,7 @@ The yield percentage can be calculated by dividing the moles of Ethylene Oxide p
 Percent conversion of Ethylene Oxide is: **`r ethy_o/100*100`%**  
 Percent yield of Ethylene Oxide is: **`r ethy_o/ethylene*100`%**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # A gas analysing CO~2~ = 5.5%, CO = 25%, H~2~ = 14% CH~4~ = 0.5% and N~2~ = 55% (by pressure) is burnt in furnace with air which is 10% excess over that required to burn CO, H~2~, CH~4~ completely. Give the analysis of product gas reaction assuming all reaction to completion.
 
@@ -385,7 +385,7 @@ Percent yield of Ethylene Oxide is: **`r ethy_o/ethylene*100`%**
 
 The percentage of gases in the furnace are by pressure, from the $PV = nRT$, Ideal Gas Law, we know that pressure percentage = volume percentage = molar percentage. So we shall assume the percentages as moles per 100 moles. However in the reactions above, we see that products like CO~2~ and H~2~O are also formed, these products will also be present in the furnace. We can find out the number of moles of these products by looking at the coefficients of the reactants.
 
-From the above reactions, we can also calculate the theoretical number of moles of O~2~ required to burn CO, H~2~ and CH~4~, which would be adding the coefficients of oxygen for all the 3 reactions, which is done by the program belo, which is done by the program below.
+From the above reactions, we can also calculate the theoretical number of moles of O~2~ required to burn CO, H~2~ and CH~4~, which would be adding the coefficients of oxygen for all the 3 reactions, which is done by the program below.
 
 ```{r, attr.source='.numberLines'}
 ## moles of gases present in furnace
@@ -415,7 +415,7 @@ Percentage of O~2~ (excess) is: **`r percentage(oxygen_at_end)`%**
 Percentage of CO~2~ is: **`r percentage(carbondioxide)`%**  
 Percentage of H~2~O is: **`r percentage(water)`%**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 # A mixture of pure CO~2~ and H~2~ is passed over a Nickel catalyst. The temperature of catalyst bed is 588K and reacting pressure is 2.02 Mega Pascal gauge. The gas mixture leaving the reactor is analysed to contain 57.1% CO~2~, 41.1% of H~2~, 1.68% of CH~4~ and 0.12% of CO by volume.
 
@@ -459,10 +459,10 @@ Percent conversion of CO~2~ is: **`r (carbondioxide-57.1)/carbondioxide*100`%**
 Yield of methane in terms of CO~2~ is: **`r methane/carbondioxide*100`%**  
 The composition of feed is **`r carbondioxide` moles of CO~2~** and **`r hydrogen` moles of H~2~**  
 
-\rule{476pt}{0.5mm}
+\rulline
 
 \begin{flushleft}
-    \footnotesize
+    \tiny
     \textit{source code of the document:}
     \url{https://github.com/dhruvapunde/biochemical-programs/blob/main/bcp-tutorials-sem-3.Rmd}
 \end{flushleft}
