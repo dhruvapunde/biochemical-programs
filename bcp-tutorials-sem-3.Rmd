@@ -196,40 +196,51 @@ table
 
 \ans
 
+\quad First reaction:
 \chemeq{C_{2}H_{4} + 0.5O_{2} \rightarrow C_{2}H_{4}O \tag{1}}
 
-\quad 100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
+\quad Second reaction:
+\chemeq{C_{2}H_{4} + 3O_{2} \rightarrow 2CO_{2} + 2H_{2}O \tag{2}}
 
-The percent conversion of ethylene is 85%, so the number of moles of oxygen and ethylene oxide would be different than the coefficients. Also the yield of ethylene oxide is 94.12%, which further changes the number of moles of ethylene oxide produced. This is calculated in the program below.
+100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
+
+The percent conversion of ethylene is 85%, so the number of moles of oxygen and ethylene oxide would be different than the coefficients. Also the yield of ethylene oxide is 94.12%, which further changes the number of moles of ethylene oxide produced. 
+
+The remaining moles of ethylene is oxidised to CO~2~ and H~2~O. The moles of the CO~2~ and H~2~O produced can be calculated by multiplying the moles of the remaining ethylene by the coefficients of the products. So the exiting gas would contain ethylene oxide, CO~2~, H~2~O, unreacted ethylene and excess O~2~. This is calculated in the program below.
 
 In this program, there are a series of vectors which correspond to weight, input moles, input mass, output moles, mass. A data frame is formed from these individual vectors and printed. The columns and rows and named accordingly. This forms the stoitiometric table.
 
 ```{r, attr.source='.numberLines'}
-## reactants and products
+## reactants and products of the first reaction
 ethylene <- (85/100)*100 # 85% conversion
 oxygen <- ethylene/2
 ethy_o <- ethylene*(94.12/100) # 94.12% yield
+excess <- 100 # total oxygen supplied
 
-weight <- c((2*12+4*1), (2*16), (2*12+4*1+1*16)) # mol weights
-i_moles <- c(ethylene, oxygen, 0) # input moles
-i_mass <- c((ethylene*weight[1]),
-    oxygen*weight[2], 0) # input mass
-oxygen_at_end <- 100 - oxygen # unreacted oxygen
+## reactants and products of the second reaction
+ethylene <- ethylene - ethy_o # remaining ethylene
+carbondioxide <- ethylene*2
+water <- ethylene*2
+oxygen_at_end <- (excess-((oxygen)+(ethylene*3))) # unreacted oxygen
 
-o_moles <- c((100-ethylene), 
-    oxygen_at_end, ethy_o) # output moles
-mass <- c(ethylene*weight[1], oxygen*weight[2],
-    ethy_o*weight[3]*(100/94.12)) # mass
+weight <- c((2*12+4*1), (2*16), (2*12+4*1+1*16), 
+    (1*12+2*16), (2*1+1*16)) # molecular weights
+i_moles <- c(100, 100, 0, 0, 0) # input moles
+i_mass <- c((100*weight[1]), (100*weight[2]), 0, 0, 0) # input mass
+
+o_moles <- c((100-(oxygen*2+ethylene)), oxygen_at_end, 
+    ethy_o, carbondioxide, water) # output moles
 
 ## data frame to plot the stoitiometric table
 ## the previous vectors are used as rows and columns
-table <- data.frame(weight, i_moles, i_mass, o_moles, mass)
+table <- data.frame(weight, i_moles, i_mass, o_moles)
 colnames(table) <- c("weight", "input moles", 
-"input mass", "output moles", "mass") # column names
-rownames(table) <- c("ethylene", "oxygen", "ethylene oxide") # row names
+    "input mass", "output moles") # column names
+rownames(table) <- c("ethylene", "oxygen", "ethylene oxide", 
+    "carbon dioxide", "water") # row names
 table
 ```
- 
+
 \rulline
 
 # Butane is burned in a combustion chamber.
@@ -348,7 +359,7 @@ Percentage of butane (unreacted) is: **`r percentage(butane)`%**
 \chemeq{C_{2}H_{4} + 0.5O_{2} \rightarrow C_{2}H_{4}O \tag{1}}
 
 \quad Second reaction (after oxidation):
-\chemeq{C_{2}H_{4} + 3O_{2} \rightarrow 2CO_{2} + 2H_{2} \tag{2}}
+\chemeq{C_{2}H_{4} + 3O_{2} \rightarrow 2CO_{2} + 2H_{2}O \tag{2}}
 
 Since 100 kmol of ethylene is fed to the reactor, theoretically 100 kmol of ethylene reacts with 50 kmol of O~2~ to produce 100 kmol of ethylene oxide. We also know that 10 kmol of CO~2~ is formed, from this we know that 5 kmol of ethylene reacts with 15 kmol of oxygen by looking at the coefficients.
 
@@ -362,9 +373,9 @@ ethy_o <- 80
 ethylene <- ethy_o + ethylene # ethylene oxide + ethylene in second reaction
 ```
 
-The percent conversion of Ethylene can be calculated by dividing the moles of Ethylene reacted to produce Ethylene Oxide by the number of moles present times 100.
+The percent conversion of ethylene can be calculated by dividing the moles of ethylene reacted to produce Ethylene Oxide by the number of moles present times 100.
 
-The yield percentage can be calculated by dividing the moles of Ethylene Oxide produced by the number of moles of Ethylene present in the first reaction times 100.
+The yield percentage can be calculated by dividing the moles of ethylene oxide produced by the number of moles of ethylene present in the first reaction times 100.
 
 Percent conversion of Ethylene Oxide is: **`r ethy_o/100*100`%**  
 Percent yield of Ethylene Oxide is: **`r ethy_o/ethylene*100`%**  
