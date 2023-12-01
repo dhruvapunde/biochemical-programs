@@ -1,7 +1,7 @@
 ---
 title: \textbf{\huge{Biochemical Process Calculation Tutorials}}
 author: \textbf{\Large{Dhruva Punde}}
-fontsize: 11pt
+fontsize: 12pt
 output: 
     pdf_document:
         extra_dependencies: ["fancyhdr", "amsmath", "hyperref"]
@@ -15,7 +15,7 @@ classoption: a4paper
 \pagestyle{fancy}
 \lhead{\large{Biochemical Process Calculation Tutorials}}
 \rhead{}
-\setlength{\headheight}{14.0pt}
+\setlength{\headheight}{18.0pt}
 
 \definecolor{shadecolor}{RGB}{230, 230, 230}
 
@@ -24,7 +24,7 @@ classoption: a4paper
 \newcommand{\rulline}{\rule{456pt}{0.5mm}}
 
 ```{r echo=FALSE}
-## 3 digits afer decimal point
+## 3 digits after decimal point
 options(digits = 3)
 ```
 
@@ -160,7 +160,7 @@ Amount of H~2~ required is: **`r hydrogen` kg**
 
 \rulline
 
-# A process in which 500 kg of CaCO~3~ produces CaO (calcination reaction) with 90%. Prepare stoitiometric table.
+# A process in which 500 kg of CaCO~3~ produces CaO (calcination reaction) with 90% conversion. Prepare stoitiometric table.
 
 \ans
 
@@ -171,21 +171,23 @@ Amount of H~2~ required is: **`r hydrogen` kg**
 In this program, there are a series of vectors which each correspond to weight, input moles, input mass, output moles and mass. A data frame is formed from these individual vectors and printed. The columns and rows and named accordingly. This forms the stoitiometric table.
 
 ```{r, attr.source='.numberLines'}
-moles <- 500/100 # kg to moles
-p_moles <- moles*(90/100) # reacted moles
 weight <- c((40+12+3*16), (40+16), (12+2*16)) # mol weights
-i_moles <- c(moles, 0, 0) # input moles
-i_mass <- c(500, 0, 0) # input mass (without 90%)
-moles <- moles - p_moles # remaining moles of CaCO3
-o_moles <- c(moles, p_moles, p_moles) # output moles
-mass <- c(500, weight[2]*4.5, weight[3]*4.5) # mass
+i_moles <- c((500/weight[1]), 0, 0) # input moles
+i_mass <- c((i_moles[1]*weight[1]), 0, 0) # input mass
+
+caco3 <- (i_moles[1]*((100-90)/100))
+cao <- (i_moles[1]-caco3)
+carbondioxide <- (i_moles[1]-caco3)
+
+o_moles <- c(caco3, cao, carbondioxide) # output moles
+o_mass <- c((o_moles[1]*weight[1]), (o_moles[2]*weight[2]),
+    (o_moles[3]*weight[3])) # output mass
 
 ## data frame to plot the stoitiometric table
 ## the previous vectors are used as rows and columns
-table <- data.frame(
-    weight, i_moles, i_mass, o_moles, mass)
+table <- data.frame(weight, i_moles, i_mass, o_moles, o_mass)
 colnames(table) <- c("weight", "input moles", 
-    "input mass", "output moles", "mass") # column names
+    "input mass", "output moles", "output mass") # column names
 rownames(table) <- c("CaCO3", "CaO", "CO2") # row names
 table
 ```
@@ -200,7 +202,7 @@ table
 \chemeq{C_{2}H_{4} + 0.5O_{2} \rightarrow C_{2}H_{4}O \tag{1}}
 
 \quad Second reaction:
-\chemeq{C_{2}H_{4} + 3O_{2} \rightarrow 2CO_{2} + 2H_{2}O \tag{2}}
+\chemeq{C_{2}H_{4} + 2O_{2} \rightarrow 2CO_{2} + 2H_{2}O \tag{2}}
 
 100 kmol of O~2~ and ethylene are present. However the coefficient of O~2~ is $\frac{1}{2}$, thus ethylene is the limiting reagent. So only 50 kmol of O~2~ while 100 kmol of ethylene reacts.
 
@@ -209,6 +211,8 @@ The percent conversion of ethylene is 85%, so the number of moles of oxygen and 
 The remaining moles of ethylene is oxidised to CO~2~ and H~2~O. The moles of the CO~2~ and H~2~O produced can be calculated by multiplying the moles of the remaining ethylene by the coefficients of the products. So the exiting gas would contain ethylene oxide, CO~2~, H~2~O, unreacted ethylene and excess O~2~. This is calculated in the program below.
 
 In this program, there are a series of vectors which correspond to weight, input moles, input mass, output moles, mass. A data frame is formed from these individual vectors and printed. The columns and rows and named accordingly. This forms the stoitiometric table.
+
+Note: The mass of ethylene oxide does not add in the stoitiometric table due to the 94.12% yield.
 
 ```{r, attr.source='.numberLines'}
 ## reactants and products of the first reaction
@@ -221,21 +225,23 @@ excess <- 100 # total oxygen supplied
 ethylene <- ethylene - ethy_o # remaining ethylene
 carbondioxide <- ethylene*2
 water <- ethylene*2
-oxygen_at_end <- (excess-((oxygen)+(ethylene*3))) # unreacted oxygen
+oxygen_at_end <- (excess-((oxygen)+(ethylene*2))) # unreacted oxygen
 
 weight <- c((2*12+4*1), (2*16), (2*12+4*1+1*16), 
     (1*12+2*16), (2*1+1*16)) # molecular weights
 i_moles <- c(100, 100, 0, 0, 0) # input moles
 i_mass <- c((100*weight[1]), (100*weight[2]), 0, 0, 0) # input mass
-
 o_moles <- c((100-(oxygen*2+ethylene)), oxygen_at_end, 
     ethy_o, carbondioxide, water) # output moles
+o_mass <- c((weight[1]*o_moles[1]), (weight[2]*o_moles[2]),
+    (weight[3]*o_moles[3]), (weight[4]*o_moles[4]),
+        (weight[5]*o_moles[5])) # output mass
 
 ## data frame to plot the stoitiometric table
 ## the previous vectors are used as rows and columns
-table <- data.frame(weight, i_moles, i_mass, o_moles)
+table <- data.frame(weight, i_moles, i_mass, o_moles, o_mass)
 colnames(table) <- c("weight", "input moles", 
-    "input mass", "output moles") # column names
+    "input mass", "output moles", "output mass") # column names
 rownames(table) <- c("ethylene", "oxygen", "ethylene oxide", 
     "carbon dioxide", "water") # row names
 table
@@ -359,7 +365,7 @@ Percentage of butane (unreacted) is: **`r percentage(butane)`%**
 \chemeq{C_{2}H_{4} + 0.5O_{2} \rightarrow C_{2}H_{4}O \tag{1}}
 
 \quad Second reaction (after oxidation):
-\chemeq{C_{2}H_{4} + 3O_{2} \rightarrow 2CO_{2} + 2H_{2}O \tag{2}}
+\chemeq{C_{2}H_{4} + 2O_{2} \rightarrow 2CO_{2} + 2H_{2}O \tag{2}}
 
 Since 100 kmol of ethylene is fed to the reactor, theoretically 100 kmol of ethylene reacts with 50 kmol of O~2~ to produce 100 kmol of ethylene oxide. We also know that 10 kmol of CO~2~ is formed, from this we know that 5 kmol of ethylene reacts with 15 kmol of oxygen by looking at the coefficients.
 
