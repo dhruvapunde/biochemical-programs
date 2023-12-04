@@ -376,7 +376,7 @@ ethylene <- carbondioxide/2
 
 ## first reaction
 ethy_o <- 80
-ethylene <- ethy_o + ethylene # ethylene oxide + ethylene in second reaction
+ethylene <- ethy_o + ethylene # ethylene oxide + ethylene
 ```
 
 The percent conversion of ethylene can be calculated by dividing the moles of ethylene reacted to produce Ethylene Oxide by the number of moles present times 100.
@@ -406,15 +406,16 @@ From the above reactions, we can also calculate the theoretical number of moles 
 
 ```{r, attr.source='.numberLines'}
 ## moles of gases present in furnace
-carbondioxide <- (5.5) + (25/2*2) + (0.5*1) # furnace + reaction 1 and 2
+carbondioxide <- (5.5) + (25/2*2) + (0.5*1) # furnace + reaction 1 and 3
 carbonmono <- 25
 hydrogen <- 14
 methane <- 0.5
 nitrogen <- 55
-water <- (14/2*2)+(0.5*2) # reaction 2 and 3
+water <- (14/2*2) + (0.5*1) # reaction 2 and 3
 
 ## amount of theoretical and excess oxygen
-oxygen <- (carbonmono/2)+(hydrogen/2)+(methane*2) # theoretical oxygen
+oxygen <- ((carbonmono/2) + (hydrogen/2)
+    + (methane*2)) # theoretical oxygen
 excess <- (oxygen*10/100)+oxygen # 10% excess
 oxygen_at_end <- excess - oxygen # excess - theoretical
 
@@ -461,7 +462,7 @@ carbonmono <- 0.12
 
 ## theoretical amount of hydrogen and carbondioxide
 carbondioxide <- methane + carbonmono
-hydrogen <- (methane/4) + carbonmono
+hydrogen <- (methane*4) + carbonmono
 
 ## amount of carbondioxide and hydrogen fed in the reactor
 carbondioxide <- carbondioxide + 57.1
@@ -479,7 +480,7 @@ The composition of feed is **`r carbondioxide` moles of CO~2~** and **`r hydroge
 \rulline
 
 \begin{flushleft}
-    \tiny
+    \footnotesize
     \textit{source code of the document:}
     \url{https://github.com/dhruvapunde/biochemical-programs/blob/main/bcp-tutorials-sem-3.Rmd}
 \end{flushleft}
